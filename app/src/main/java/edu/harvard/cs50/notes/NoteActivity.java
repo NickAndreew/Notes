@@ -45,7 +45,7 @@ public class NoteActivity extends AppCompatActivity {
         if (!editText.getText().toString().isEmpty())
             content = editText.getText().toString();
 
-        MainActivity.database.noteDao().save(title, content, id);
+        MainActivity.database.noteDao().update(title, content, id);
     }
 
     @Override

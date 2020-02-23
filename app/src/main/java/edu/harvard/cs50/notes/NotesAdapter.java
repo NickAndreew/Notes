@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
+
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
 
         public LinearLayout containerView;
@@ -66,5 +67,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     public void reload() {
         notes = MainActivity.database.noteDao().getAll();
         notifyDataSetChanged();
+    }
+
+    public void removeItem(int id, int position) {
+        notes.remove(position);
+        MainActivity.database.noteDao().delete(id);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Note note, int position) {
+        notes.add(position, note);
+        MainActivity.database.noteDao().save(note.id, note.title, note.content);
+        notifyItemInserted(position);
     }
 }
